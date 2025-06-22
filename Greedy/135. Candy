@@ -1,0 +1,29 @@
+class Solution {
+    public int candy(int[] ratings) {
+        int n=ratings.length;
+        int[]candies= new int[n];
+        Arrays.fill(candies, 0);
+ PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[1] - b[1]);
+    for (int i = 0; i < ratings.length; i++) {
+     pq.offer(new int[]{i, ratings[i]});
+            }
+        while(!pq.isEmpty()){
+            int[] curr= pq.poll();
+            int i=curr[0];
+            int left=0;
+            int right=0;
+            if (i > 0 && ratings[i] > ratings[i - 1]) {
+    left = candies[i - 1];
+        }
+        if (i < n - 1 && ratings[i] > ratings[i + 1]) {
+    right = candies[i + 1];
+        }
+            candies[i] = Math.max(left, right) + 1;
+        }
+       int total = 0;
+        for (int c : candies) {
+            total += c;
+        }
+        return total;
+    }
+}
